@@ -1,5 +1,4 @@
 const usersRepository = require('./users-repository');
-const { hashPassword } = require('../../../utils/password');
 
 /**
  * Get list of users
@@ -105,6 +104,24 @@ async function deleteUser(id) {
   }
 
   return true;
+}
+
+/**
+ * Check user email
+ * @param {string} email - Email
+ * @return {boolean}
+ */
+async function checkUserEmail(email){
+  const check = usersRepository.checkUserEmail(email)
+
+  try{
+    await usersRepository.checkUserEmail(email)
+  }
+  catch(err){
+    return null
+  }
+
+  return true
 }
 
 module.exports = {

@@ -51,6 +51,14 @@ async function createUser(request, response, next) {
     const email = request.body.email;
     const password = request.body.password;
 
+    const check = await usersService.checkUserEmail(email);
+    if (!check) {
+      throw errorResponder(
+        errorTypes.EMAIL_ALREADY_TAKEN,
+        'Failed to create email'
+      );
+    }
+
     const success = await usersService.createUser(name, email, password);
     if (!success) {
       throw errorResponder(
