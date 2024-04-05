@@ -50,6 +50,7 @@ async function createUser(request, response, next) {
     const name = request.body.name;
     const email = request.body.email;
     const password = request.body.password;
+    const confirm_password = request.body.confirm_password
 
     const check = await usersService.checkUserEmail(email);
     if (!check) {
@@ -59,13 +60,23 @@ async function createUser(request, response, next) {
       );
     }
 
-    const success = await usersService.createUser(name, email, password);
+    const success = await usersService.createUser(name, email, password, confirm_password);
+
+    if(password !== confirm_password){
+      throw errorResponder(
+        errorTypes.INVALID_PASSWORD,
+        'Password doesn\'t match'
+      );
+    }
+
     if (!success) {
       throw errorResponder(
         errorTypes.UNPROCESSABLE_ENTITY,
         'Failed to create user'
       );
     }
+  
+
 
     return response.status(200).json({ name, email });
   } catch (error) {
