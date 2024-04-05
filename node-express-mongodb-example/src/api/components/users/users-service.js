@@ -128,6 +128,29 @@ async function checkUserEmail(email){
   return true;
 }
 
+/**
+ * Change user password
+ * @param {string} id = User ID
+ * @param {string} new_password - new pass
+ * @param {string} password - old pass
+ * @return {boolean}
+ */
+async function changeUserPass(id, password, new_password){
+  const userPass = await usersRepository.getUser(id);
+
+  if(!userPass){
+    return null
+  }
+  
+  try {
+    await usersRepository.changeUserPass(id, password, new_password);
+  } catch (err) {
+    return null;
+  }
+
+  return true;
+}
+
 module.exports = {
   getUsers,
   getUser,
@@ -135,4 +158,5 @@ module.exports = {
   updateUser,
   deleteUser,
   checkUserEmail,
+  changeUserPass,
 };

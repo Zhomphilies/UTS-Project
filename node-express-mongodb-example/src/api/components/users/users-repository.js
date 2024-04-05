@@ -71,6 +71,27 @@ async function checkUserEmail(email){
   return userEmail = User.findOne({ email: email });
 } 
 
+/**
+ * Change user password
+ * @param {string} id = User ID
+ * @param {string} new_password - new pass
+ * @param {string} password - old pass
+ * @return {Promise}
+ */
+async function changeUserPass(id, password, new_password){
+  return User.updateOne(
+    {
+      _id: id,
+    },
+    {
+      $set: {
+        password,
+        new_password,
+      },
+    }
+  );
+}
+
 module.exports = {
   getUsers,
   getUser,
@@ -78,4 +99,5 @@ module.exports = {
   updateUser,
   deleteUser,
   checkUserEmail,
+  changeUserPass,
 };
