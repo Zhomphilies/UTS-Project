@@ -68,12 +68,7 @@ async function deleteUser(id) {
  * @returns {Promise}
  */
 async function checkUserEmail(email){
-  if(User.findOne(email)){
-    return null
-  }
-  else{
-    return email
-  }
+  return userEmail = User.findOne({ email: email });
 } 
 
 module.exports = {
