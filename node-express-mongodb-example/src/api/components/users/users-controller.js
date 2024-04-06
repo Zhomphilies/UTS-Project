@@ -154,11 +154,11 @@ async function deleteUser(request, response, next) {
 async function changeUserPass(request, response, next){
   try{
     const id = request.param.id
-    const password = request.param.password
+    const password = request.body.password
     const new_password = request.param.new_password
     const confirm_new_password = request.param.confirm_new_password
 
-    const change = await usersService.changeUserPass(id, password, new_password, confirm_new_password);
+    const change = await usersService.changeUserPass(id, password, new_password/*, confirm_new_password*/);
     if(!change){
       throw errorResponder(
         errorTypes.INVALID_PASSWORD,
@@ -166,12 +166,12 @@ async function changeUserPass(request, response, next){
       );
     }
 
-    if(new_password !== confirm_new_password){
-      throw errorResponder(
-        errorTypes.INVALID_PASSWORD,
-        'Password doesn\'t match'
-      );
-    }
+    // if(new_password !== confirm_new_password){
+    //   throw errorResponder(
+    //     errorTypes.INVALID_PASSWORD,
+    //     'Password doesn\'t match'
+    //   );
+    // }
 
     if(password === new_password){
       throw errorResponder(
@@ -179,6 +179,7 @@ async function changeUserPass(request, response, next){
         'Password haven\'t change'
       );
     }
+    
     return response.status(200).json({ id });
   } catch (error) {
     return next(error);

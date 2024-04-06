@@ -1,6 +1,6 @@
 const usersRepository = require('./users-repository');
 const { hashPassword } = require('../../../utils/password');
-const { compare } = require('bcrypt');
+const { passwordMatched } = require('../../../utils/password');
 
 /**
  * Get list of users
@@ -137,19 +137,19 @@ async function checkUserEmail(email){
  * @return {boolean}
  */
 async function changeUserPass(id, password, new_password){
-  const user = await usersRepository.getUser(id);
-
-  if(!user){
+  const hashpass = await hashPassword(new_password);
+  const userPass = await usersRepository.getUser(id);
+  if(!userPass){
     return null
   }
 
-  const checkOldPass = await compare(password, user.password)
+  const checkOldPass = await passwordMatched(password, user.password)
   if(!checkOldPass){
-    return true
+    return false
   }
   
   try {
-    await usersRepository.changeUserPass(id, new_password);
+    await usersRepository.changeUserPass(id, hashpass);
   } catch (err) {
     return null;
   }
