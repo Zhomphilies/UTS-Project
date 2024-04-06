@@ -74,11 +74,11 @@ async function checkUserEmail(email){
 /**
  * Change user password
  * @param {string} id = User ID
- * @param {string} new_password - new pass
  * @param {string} password - old pass
+ * @param {string} new_password = new pass
  * @return {Promise}
  */
-async function changeUserPass(id, password, new_password){
+async function changeUserPass(id, password){
   return User.updateOne(
     {
       _id: id,
@@ -86,7 +86,6 @@ async function changeUserPass(id, password, new_password){
     {
       $set: {
         password,
-        new_password,
       },
     }
   );

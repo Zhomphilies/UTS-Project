@@ -18,11 +18,11 @@ module.exports = {
     },
   },
 
-  changePassword: {
+  changeUserPassword: {
     body: {
       password: joi.string().min(6).max(32).required().label('Password'),
       new_password: joi.string().min(6).max(32).required().label('New Password'),
-      confirm_password: joi.string().min(6).max(32).required().label('Confirm password'),
+      confirm_new_password: joi.string().min(6).max(32).required().label('Confirm new password'),
       //confirm_password: joi.valid(joi.ref('new_password')).required().label('Confirm password')
     }
   }
