@@ -143,9 +143,9 @@ async function changeUserPass(id, password, new_password){
     return null
   }
 
-  const checkOldPass = await passwordMatched(password, user.password)
+  const checkOldPass = await passwordMatched(password, userPass.password)
   if(!checkOldPass){
-    return false
+    return null
   }
   
   try {
@@ -166,3 +166,4 @@ module.exports = {
   checkUserEmail,
   changeUserPass,
 };
+  
